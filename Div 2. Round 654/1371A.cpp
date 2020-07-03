@@ -29,10 +29,10 @@ int dx[] = {-1, 1, 0, 0};
 int dy[] = {0, 0, -1, 1};
 
 int32_t main() {
-    fio
-    int t; cin >> t;
-    while(t--) {
-        int n; cin >> n;
-        cout << (n + 1)/2 << endl;
-    }
-}
+   fio
+   int t; cin >> t;
+   while(t--) {
+      int n; cin >> n;
+      cout << (n + 1) / 2 << endl;
+   }
+}  
