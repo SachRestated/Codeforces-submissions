@@ -83,7 +83,7 @@ void preprocess() {
 
 int32_t main() {
     fio
-    preprocess(); //precompute answers 
+    preprocess(); //precompute answers, then just query the results
     int t; cin >> t;
     while(t--) {
         int x; cin >> x;
