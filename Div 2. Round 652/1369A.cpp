@@ -33,6 +33,8 @@ int32_t main() {
     int t; cin >> t;
     while(t--) {
         int n; cin >> n;
+        // The asked fact is true for every regular polygon whose number
+        // of sides is a multiple of 4 
         if(n % 4 == 0) {
             cout << "YES" << endl;
         }

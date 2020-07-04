@@ -32,6 +32,7 @@ int32_t main() {
     fio
     int t; cin >> t;
     while(t--) {
+        // Basic Implementation
         int n; cin >> n;
         string s; cin >> s;
         v1d p;
