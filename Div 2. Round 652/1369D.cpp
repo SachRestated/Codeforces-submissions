@@ -61,6 +61,8 @@ int _pow(int p, int q){
     }
     return (res+MOD)%MOD;
 }
+
+
 void preprocess() {
     ans[1] = 0;
     ans[2] = 0;
@@ -77,11 +79,11 @@ void preprocess() {
            ans[i] =  add(ans[i], 4);
         }
     }
-
 } 
+
 int32_t main() {
     fio
-    preprocess();
+    preprocess(); //precompute answers 
     int t; cin >> t;
     while(t--) {
         int x; cin >> x;
