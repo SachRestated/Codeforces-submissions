@@ -30,93 +30,63 @@ int dy[] = {0, 0, -1, 1};
 
 int32_t main() {
     fio
-    cout << endl << endl;
     int t; cin >> t;
     while(t--) {
         int n; cin >> n;
         set<int> st;
         int p = 2 + n * 2;
         for(int i=0; i<p + 1; ++i) st.insert(i);
-        map<int, v1d> m;
+        map<int, int> m;
         v1d v(n);
         v1d ans;
         set<int> mult;
+        
+        auto issorted = [&]() {
+            for(int i=1; i<n; ++i) if(v[i] < v[i - 1]) return false;
+            return true;
+        };
 
         for(int i=0; i<n; ++i) {
             cin >> v[i];
             st.erase(v[i]);
-            m[v[i]].pb(i);
-            if(sz(m[v[i]]) > 1) mult.insert(v[i]); 
-        }
-
-        while(!mult.empty()) {
-            int p = *(mult.begin());
-            int q = m[p].back();
-            int r = *(st.begin());
-            ans.pb(q + 1);
-            v[q] = r;
-            st.erase(st.begin());
-            m[p].pop_back();
-            m[r].pb(q);
-            if(sz(m[p]) == 1) mult.erase(p);
+            m[v[i]]++;
+            // if(sz(m[v[i]]) > 1) mult.insert(v[i]); 
         }
        
-        if(sz(m[0]) == 1) {
-            int r = *(st.begin());
-            v[m[0].back()] = r;
-            ans.pb(m[0].back() + 1);
-            m.erase(0);
-            st.erase(r);
-            st.insert(0);
-        }
-        int y = v[0];
-        v[0] = 0;
-        st.erase(0);
-        st.insert(y);
-        ans.pb(1);
+        while(true) {
+            if(sz(ans) > 2 * n) break;
 
-        
-        for(int i=0; i<n; ++i) {
+            if(issorted()) break;
             int r = *(st.begin());
             if(r == n) {
-                bool ok = true;
-                for(int j=0; j<n; ++j) {
-                    if(v[j] != j) {
-                        int y = v[j];
-                        v[j] = n;
-                        st.erase(n);
-                        st.insert(y);
-                        ans.pb(j + 1);
-                        ok = false;
-                        break;
-                    }
-                }
-                if(ok) break;
-                continue;
+               for(int i=1; i<n; ++i) {
+                   if(v[i] < v[i - 1]) {
+                       int y = v[i - 1];
+                       v[i - 1] = n;
+                       ans.pb(i);
+                       if(--m[y] == 0) {
+                           st.insert(y);
+                           m.erase(y);
+                       }
+                       st.erase(n);
+                       m[n]++;
+                       break;
+                   }
+               }
+               continue;
             }
-            int x = v[r];
-            // cout << r << " " << x << endl;
-            
+            int y = v[r];
             v[r] = r;
-            st.erase(r);
-            st.insert(x);
-            ans.pb(r + 1);
-        }
-        
-        for(int i=0; i<n; ++i) {
-            if(v[i] == n) {
-                // cout << "hi" << endl;
-                ans.pb(i + 1);
-                v[i] = i;
+            if(--m[y] == 0) {
+                m.erase(y);
+                st.insert(y);
             }
+            ans.pb(r + 1);
+            m[r]++;
+            st.erase(r);
         }
-        
-        // for(auto &k : v) cout << k << " " ;
-        // cout << endl;
         cout << sz(ans) << endl;
         for(auto &k : ans) cout << k << " " ;
-        
-        cout << endl;
-
+        cout << '\n';
     }
 }
