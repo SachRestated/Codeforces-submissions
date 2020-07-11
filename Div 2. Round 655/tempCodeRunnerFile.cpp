@@ -4,6 +4,7 @@
 using namespace std;
 using namespace __gnu_pbds;
 #define int long long
+#define sz(v) (int)v.size()
 #define pr pair<int, int>
 #define v1d vector<int>
 #define mp make_pair
@@ -27,17 +28,32 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 int dx[] = {-1, 1, 0, 0};
 int dy[] = {0, 0, -1, 1};
 
-
 int32_t main() {
     fio
     int t; cin >> t;
     while(t--) {
         int n; cin >> n;
-        if(n % 2 == 0) {
-            cout << n / 2 << endl;
+        v1d v(n);
+        for(auto &k : v) {
+            cin >> k;
         }
-        else {
-            cout << (n - 1) / 2 << endl;
+        v1d p;
+        for(int i=0; i<n; ++i) {
+            if(v[i] != i + 1) {
+                p.pb(i);
+            }
         }
+        if(sz(p) == 0) {
+            cout << 0 << endl; continue;
+        }
+        bool ok = false;
+        for(int i=1; i<sz(p) && !ok; ++i) {
+            if(p[i] != p[i - 1] + 1) {
+                ok = true;
+            }
+
+        }
+        if(!ok) cout << 1 << endl;
+        else cout << 2 << endl;
     }
 }
