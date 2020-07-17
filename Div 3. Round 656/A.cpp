@@ -32,18 +32,20 @@ int32_t main() {
     fio
     int t; cin >> t;
     while(t--) {
-        int n; cin >> n;
-        v1d ans;
-        v1d a(n + n);
+        v1d a(3);
         for(auto &k : a) cin >> k;
-        vb isit(n + 1);
-        for(int i=0; i<sz(a); ++i) {
-            if(!isit[i]) {
-                ans.pb(a[i]);
-                isit[i] = 1;
-            }
+        RS(a);
+        if(a[0] != a[1]) {
+            cout << "NO" << endl;
+            continue;
         }
-        for(auto &k : ans) cout << k << " " ;
-        cout << endl;
+        cout << "YES" << endl;
+        if(a[0] == a[2]) {
+            cout << a[0] << ' ' << a[0] << ' ' << a[0] << endl;
+        }
+        else {
+            cout << a[0] << " " << a[2] << " " << a[2] << endl; 
+        }
+
     }
 }
