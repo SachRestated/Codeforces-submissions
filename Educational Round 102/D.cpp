@@ -31,44 +31,48 @@ int dy[] = {0, 0, -1, 1};
 
 
 void SachRestated() {
-    int n; cin >> n; 
-    map<int, int> m;
-    map<int, int> mpp;
+    int n, m; cin >> n >> m;
+    vector<int> mxfront(n + 1), mnfront(n + 1), curfront(n + 1);
+    vector<int> mxback(n + 1), mnback(n + 1), curback(n + 1);
+    int mx = 0, mn = 0, cur = 0;
+    string s; cin >> s;
     for(int i = 0; i < n; ++i) {
-        int k; cin >> k;
-        mpp[k]++;
+        s[i] == '+' ? ++cur : --cur;
+        mx = max(mx, cur);
+        mn = min(mn, cur);
+        mxfront[i + 1] = mx;
+        mnfront[i + 1] = mn;
+        curfront[i + 1] = cur;
     }
-    for(auto &k : mpp) m[k.ss]++;
-    int x = sz(m);
-    v1d pre(x), suf(x), cnt(x), num(x);
-    int tot = 0;
-    int sum = 0;
-    int id = 0;
-    for(auto &k : m) {
-        pre[id] = sum;
-        sum += (k.ff * k.ss);
-        tot += k.ss;
-        cnt[id] = tot;
-        num[id] = k.ff;
-        ++id;
-    }
-    --id;
-    sum = 0;
-    for(auto it = m.rbegin(); it != m.rend(); ++it) {
-        suf[id] = sum;
-        sum += (it->first * it->second);
-        --id;
+    mx = 0, mn = 0, cur = 0;
+    for(int i = n - 1; ~i; --i) {
+        s[i] == '+' ? --cur : ++cur;
+        mx = max(mx, cur);
+        mn = min(mn, cur);
+        mxback[i + 1] = mx;
+        mnback[i + 1] = mn;
+        curback[i + 1] = cur;
     }
 
-    int ans = n + 1;
-    for(int i = 0; i < x; ++i) {
-        int val = pre[i];
-        int count = tot - cnt[i];
-        
-        val += (suf[i] - (count * num[i]));
-        ans = min(ans, val);
+    for(int i = 0; i < m; ++i) {
+        int l, r; cin >> l >> r;
+
+        int mxf = mxfront[l - 1];
+        int mnf = mnfront[l - 1];
+        int cur = curfront[l - 1];
+        int inc = 0;
+        int dec = 0;
+
+        if(r != n) {
+            dec = curback[r + 1] - mnback[r + 1];
+            inc = mxback[r + 1] - curback[r + 1];
+
+        }
+        // cout << mnf << " " << mxf << " " << cur << " " << dec << ' ' << inc << endl;
+        mnf = min(mnf, cur - dec);
+        mxf = max(mxf, cur + inc);
+        cout << mxf - mnf + 1 << endl;
     }
-    cout << ans << endl;
 }
 
 int32_t main() {

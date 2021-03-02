@@ -31,44 +31,12 @@ int dy[] = {0, 0, -1, 1};
 
 
 void SachRestated() {
-    int n; cin >> n; 
-    map<int, int> m;
-    map<int, int> mpp;
-    for(int i = 0; i < n; ++i) {
-        int k; cin >> k;
-        mpp[k]++;
-    }
-    for(auto &k : mpp) m[k.ss]++;
-    int x = sz(m);
-    v1d pre(x), suf(x), cnt(x), num(x);
-    int tot = 0;
-    int sum = 0;
-    int id = 0;
-    for(auto &k : m) {
-        pre[id] = sum;
-        sum += (k.ff * k.ss);
-        tot += k.ss;
-        cnt[id] = tot;
-        num[id] = k.ff;
-        ++id;
-    }
-    --id;
-    sum = 0;
-    for(auto it = m.rbegin(); it != m.rend(); ++it) {
-        suf[id] = sum;
-        sum += (it->first * it->second);
-        --id;
-    }
-
-    int ans = n + 1;
-    for(int i = 0; i < x; ++i) {
-        int val = pre[i];
-        int count = tot - cnt[i];
-        
-        val += (suf[i] - (count * num[i]));
-        ans = min(ans, val);
-    }
-    cout << ans << endl;
+    int n, d; cin >> n >> d;
+    v1d v(n);
+    for(auto &k : v) cin >> k;
+    sort(all(v));
+    if(v.back() <= d or v[0] + v[1] <= d) cout << "YES" << '\n';
+    else cout << "NO" << '\n';
 }
 
 int32_t main() {

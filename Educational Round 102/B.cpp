@@ -31,44 +31,43 @@ int dy[] = {0, 0, -1, 1};
 
 
 void SachRestated() {
-    int n; cin >> n; 
-    map<int, int> m;
-    map<int, int> mpp;
-    for(int i = 0; i < n; ++i) {
-        int k; cin >> k;
-        mpp[k]++;
-    }
-    for(auto &k : mpp) m[k.ss]++;
-    int x = sz(m);
-    v1d pre(x), suf(x), cnt(x), num(x);
-    int tot = 0;
-    int sum = 0;
-    int id = 0;
-    for(auto &k : m) {
-        pre[id] = sum;
-        sum += (k.ff * k.ss);
-        tot += k.ss;
-        cnt[id] = tot;
-        num[id] = k.ff;
-        ++id;
-    }
-    --id;
-    sum = 0;
-    for(auto it = m.rbegin(); it != m.rend(); ++it) {
-        suf[id] = sum;
-        sum += (it->first * it->second);
-        --id;
-    }
+    string s, t; cin >> s >> t;
+    if(sz(s) > sz(t)) swap(s, t);
 
-    int ans = n + 1;
-    for(int i = 0; i < x; ++i) {
-        int val = pre[i];
-        int count = tot - cnt[i];
-        
-        val += (suf[i] - (count * num[i]));
-        ans = min(ans, val);
+    int x = sz(s);
+    int y = sz(t);
+
+    int k = __gcd(x, y);
+    int p = 0;
+    string check;
+    for(int i = 0; i < k; ++i) check.pb(s[i]);
+    for(int i = 0 ; i < x; ++i) {
+        if(s[i] != check[p]) {
+            cout << -1 << endl; return;
+        } 
+        ++p;
+        p %= k;
     }
-    cout << ans << endl;
+    p = 0;
+    for (int i = 0; i < y; ++i)
+    {
+        if (t[i] != check[p])
+        {
+            cout << -1 << endl;
+            return;
+        }
+        ++p;
+        p %= k;
+    }
+    p = 0;
+    int z = (x * y) / k;
+    string res;
+    for(int i = 0; i < z; ++i) {
+        res.push_back(check[p]);
+        ++p;
+        p %= k;
+    }
+    cout << res << endl;
 }
 
 int32_t main() {

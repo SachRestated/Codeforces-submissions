@@ -31,44 +31,25 @@ int dy[] = {0, 0, -1, 1};
 
 
 void SachRestated() {
-    int n; cin >> n; 
-    map<int, int> m;
-    map<int, int> mpp;
-    for(int i = 0; i < n; ++i) {
-        int k; cin >> k;
-        mpp[k]++;
-    }
-    for(auto &k : mpp) m[k.ss]++;
-    int x = sz(m);
-    v1d pre(x), suf(x), cnt(x), num(x);
-    int tot = 0;
-    int sum = 0;
-    int id = 0;
-    for(auto &k : m) {
-        pre[id] = sum;
-        sum += (k.ff * k.ss);
-        tot += k.ss;
-        cnt[id] = tot;
-        num[id] = k.ff;
-        ++id;
-    }
-    --id;
-    sum = 0;
-    for(auto it = m.rbegin(); it != m.rend(); ++it) {
-        suf[id] = sum;
-        sum += (it->first * it->second);
-        --id;
-    }
+    int n, k; cin >> n >> k;
+    int ex = n - k;
+    if(ex == 0) {
+        for(int i = 1; i <= k; ++i) cout << i << " ";
+        cout << endl; return;
+    } else {
+        int num = k - ex;
+        int pos = k - 1;
+        v1d ans(k);
+        iota(all(ans), 1);
+        while(num <= k) {
+            ans[pos--] = num++;
+        }
 
-    int ans = n + 1;
-    for(int i = 0; i < x; ++i) {
-        int val = pre[i];
-        int count = tot - cnt[i];
-        
-        val += (suf[i] - (count * num[i]));
-        ans = min(ans, val);
+
+        for(auto &j : ans) cout << j << ' ' ;
+        cout << endl;
+        // reverse(ans.begin(), ans.begin())
     }
-    cout << ans << endl;
 }
 
 int32_t main() {
